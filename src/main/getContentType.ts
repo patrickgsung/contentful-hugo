@@ -86,6 +86,7 @@ const getContentType = async (
         content_type: contentSettings.typeId,
         limit,
         skip,
+        include: 10,
         order: 'sys.updatedAt',
     };
     if (contentSettings.filters) {
