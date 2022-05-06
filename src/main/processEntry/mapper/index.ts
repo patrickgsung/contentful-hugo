@@ -214,6 +214,11 @@ const mapFields = (
             }
             continue;
         }
+
+        if (!fieldContent) {
+            continue;
+        }
+
         switch (typeof fieldContent) {
             case 'object':
                 if ('sys' in fieldContent) {
