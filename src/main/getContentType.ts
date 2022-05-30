@@ -113,8 +113,11 @@ const getContentType = async (
         const tasks: Promise<void>[] = [];
         for (let i = 0; i < data.items.length; i++) {
             const item = data.items[i];
-            tasks.push(processEntry(item, contentSettings));
-            itemCount++;
+
+            if (item.fields.language?.includes(query.locale)) {
+                tasks.push(processEntry(item, contentSettings));
+                itemCount++;
+            }
         }
         await Promise.all(tasks);
         // check total number of items against number of items pulled in API
