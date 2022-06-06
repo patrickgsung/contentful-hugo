@@ -1,6 +1,6 @@
 import { ContentSettings } from '@main/index';
 import { ensureDir, writeFile } from 'fs-extra';
-import { createClient } from 'contentful';
+import { createClient, Entry } from 'contentful';
 import processEntry from './processEntry';
 import { ConfigContentfulSettings } from './config/types';
 import { parseDirectoryPath } from './processEntry/createFile';
@@ -16,6 +16,10 @@ interface ContentfulClientQuery {
     skip?: number;
     order?: string;
     'sys.id'?: string;
+}
+
+interface Field {
+    language: Array<unknown>;
 }
 
 export const prepDirectory = async (
@@ -113,8 +117,14 @@ const getContentType = async (
         const tasks: Promise<void>[] = [];
         for (let i = 0; i < data.items.length; i++) {
             const item = data.items[i];
+            const field: Field = item.fields as Field;
 
-            if (item.fields.language?.includes(query.locale)) {
+            if (field.language) {
+                if (field.language.includes(query.locale)) {
+                    tasks.push(processEntry(item, contentSettings));
+                    itemCount++;
+                }
+            } else {
                 tasks.push(processEntry(item, contentSettings));
                 itemCount++;
             }
