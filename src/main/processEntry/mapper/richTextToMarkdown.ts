@@ -82,15 +82,6 @@ const optionsRenderNode = (parentContentType = ''): any => ({
         const removeExtraSpace = finalString.substr(0, finalString.length - 6);
         return `${removeExtraSpace}\n`;
     },
-    [BLOCKS.OL_LIST]: (node: OrderedList, next: Next) => {
-        let string = ``;
-        for (let i = 0; i < node.content.length; i++) {
-            const item = node.content[i];
-            string += `${i + 1}. ${next(item.content)}`;
-        }
-        string = string.replace(/\n\n/g, `\n`);
-        return `${string}\n`;
-    },
     [BLOCKS.UL_LIST]: (node: UnorderedList, next: Next) => {
         let string = ``;
         for (let i = 0; i < node.content.length; i++) {
