@@ -57,42 +57,6 @@ const mapAsset = (target: Asset) => {
 };
 
 const optionsRenderNode = (parentContentType = ''): any => ({
-    [BLOCKS.HEADING_1]: (node: Heading1, next: Next) =>
-        `# ${next(node.content)}\n\n`,
-    [BLOCKS.HEADING_2]: (node: Heading2, next: Next) =>
-        `## ${next(node.content)}\n\n`,
-    [BLOCKS.HEADING_3]: (node: Heading3, next: Next) =>
-        `### ${next(node.content)}\n\n`,
-    [BLOCKS.HEADING_4]: (node: Heading4, next: Next) =>
-        `#### ${next(node.content)}\n\n`,
-    [BLOCKS.HEADING_5]: (node: Heading5, next: Next) =>
-        `##### ${next(node.content)}\n\n`,
-    [BLOCKS.HEADING_6]: (node: Heading6, next: Next) =>
-        `###### ${next(node.content)}\n\n`,
-    [BLOCKS.PARAGRAPH]: (node: Paragraph, next: Next) =>
-        `${next(node.content)}\n\n`,
-    [BLOCKS.QUOTE]: (node: Quote, next: Next) => {
-        const string = next(node.content);
-        const lines = string.split(`\n`);
-        let finalString = '';
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            finalString += `> ${line}\n`;
-        }
-        const removeExtraSpace = finalString.substr(0, finalString.length - 6);
-        return `${removeExtraSpace}\n`;
-    },
-    [BLOCKS.UL_LIST]: (node: UnorderedList, next: Next) => {
-        let string = ``;
-        for (let i = 0; i < node.content.length; i++) {
-            const item = node.content[i];
-            string += `- ${next(item.content)}`;
-        }
-        string = string.replace(/\n\n/g, `\n`);
-        return `${string}\n`;
-    },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    [BLOCKS.HR]: (_node: Hr, _next: Next) => `---\n\n`,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     [BLOCKS.EMBEDDED_ASSET]: (node: any, next: Next) => {
         const {
@@ -129,7 +93,7 @@ const optionsRenderNode = (parentContentType = ''): any => ({
         }" >}}\n\n`;
     },
     [INLINES.HYPERLINK]: (node: Hyperlink, next: Next) =>
-        `[${next(node.content)}](${node.data.uri})`,
+        `<a href="${node.data.uri}" target="_blank">${next(node.content)}</a>`,
     [INLINES.ASSET_HYPERLINK]: (node: any, next: Next) => {
         const {
             title,
