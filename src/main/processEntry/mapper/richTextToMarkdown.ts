@@ -140,16 +140,6 @@ const sanitizedMarkOutput = (
 };
 
 const options = (parentContentType = '') => ({
-    renderMark: {
-        [MARKS.BOLD]: (text: string) => sanitizedMarkOutput(text, '**'),
-        [MARKS.ITALIC]: (text: string) => sanitizedMarkOutput(text, '_'),
-        [MARKS.CODE]: (text: string) => {
-            if (isMultilineString(text)) {
-                return `\`\`\`\n${text}\n\`\`\``;
-            }
-            return `\`${text}\``;
-        },
-    },
     renderNode: optionsRenderNode(parentContentType),
 });
 
