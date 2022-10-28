@@ -72,7 +72,7 @@ const optionsRenderNode = (parentContentType = ''): any => ({
         const handleQuotes = (string: string) => {
             // eslint-disable-next-line prefer-regex-literals
             const regex = new RegExp(/"/, 'g');
-            return string.replace(regex, '\\"');
+            return string ? string.replace(regex, '\\"') : '';
         };
 
         return `{{< contentful-hugo/embedded-asset title="${handleQuotes(
